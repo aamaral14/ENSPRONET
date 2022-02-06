@@ -1,14 +1,23 @@
+using Bogus;
+using CountryData;
+using CountryData.Bogus;
 using ENSPRONET.Services.Context;
+using ENSPRONET.Services.Services.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ENSPRONET.Services.Services.Country;
 
-public class CountryService : ICountryReadService, ICountryCreateService
+public class CountryService : ICountryReadService, ICountryCreateService, ISeederService<Domains.Domains.Country>
 {
     private readonly ENSPRONETContext ENSPRONETContext;
     public CountryService(ENSPRONETContext ensproNetContext)
     {
         ENSPRONETContext = ensproNetContext;
+    }
+
+    public CountryService()
+    {
+
     }
 
     public async Task<int> Create(Domains.Domains.Country country)
@@ -44,5 +53,24 @@ public class CountryService : ICountryReadService, ICountryCreateService
             throw new ArgumentNullException(code);
 
         return await ENSPRONETContext.Countries.FirstAsync(m => m.Alpha2Code == code);
+    }
+
+    public IEnumerable<Domains.Domains.Country> GenerateSeedData(int numberRecords)
+    {
+        if (numberRecords <= 0)
+            throw new ArgumentException("number records needs to be higher than 0");
+
+        int index = 1;
+        var allCountryInfo = CountryLoader.CountryInfo;
+        var fakerCountryDefinition = new Faker<Domains.Domains.Country>()
+            .RuleFor(m => m.Id, f => index++)
+            .RuleFor(m => m.CountryName, f => f.Country().Name())
+            .RuleFor(m => m.Alpha2Code, (f, u) => allCountryInfo.First(m => m.Name == u.CountryName).Iso)
+            .RuleFor(m => m.Alpha3Code, (f, u) => allCountryInfo.First(m => m.Name == u.CountryName).Iso3)
+            .RuleFor(m => m.InternetDomain, (f, u) => allCountryInfo.First(m => m.Name == u.CountryName).TopLevelDomain)
+            .RuleFor(m => m.NumericCode, (f, u) => allCountryInfo.First(m => m.Name == u.CountryName).IsoNumeric)
+            .RuleFor(m => m.SubDivisionCode, (f, u) => allCountryInfo.First(m => m.Name == u.CountryName).Fips.ToString());
+
+        return fakerCountryDefinition.Generate(numberRecords);
     }
 }

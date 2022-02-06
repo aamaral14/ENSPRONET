@@ -1,4 +1,6 @@
+using ENSPRONET.Domains.Domains;
 using ENSPRONET.Services.Context;
+using ENSPRONET.Services.Services.Common.Interfaces;
 using ENSPRONET.Services.Services.Country;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +11,11 @@ builder.Services.AddControllersWithViews();
 
 
 #region IOC
-builder.Services.AddDbContext<ENSPRONETContext>();
+
 builder.Services.AddTransient<ICountryReadService, CountryService>();
+builder.Services.AddTransient<ICountryCreateService, CountryService>();
+builder.Services.AddTransient<ISeederService<Country>, CountryService>();
+builder.Services.AddDbContext<ENSPRONETContext>();
 #endregion
 
 
