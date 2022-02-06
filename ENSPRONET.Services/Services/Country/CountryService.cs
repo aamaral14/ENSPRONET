@@ -43,6 +43,6 @@ public class CountryService : ICountryReadService, ICountryCreateService
         if (String.IsNullOrEmpty(code))
             throw new ArgumentNullException(code);
 
-        return await ENSPRONETContext.Countries.FirstOrDefaultAsync(m => m.Alpha2Code == code);
+        return await ENSPRONETContext.Countries.FirstAsync(m => m.Alpha2Code == code);
     }
 }
