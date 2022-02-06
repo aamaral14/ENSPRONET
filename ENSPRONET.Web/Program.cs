@@ -1,8 +1,18 @@
+using ENSPRONET.Services.Context;
+using ENSPRONET.Services.Services.Country;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+
+#region IOC
+builder.Services.AddDbContext<ENSPRONETContext>();
+builder.Services.AddTransient<ICountryReadService, CountryService>();
+#endregion
+
 
 var app = builder.Build();
 
@@ -22,6 +32,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html"); ;
 
 app.Run();
