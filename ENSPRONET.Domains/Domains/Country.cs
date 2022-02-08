@@ -23,8 +23,8 @@ public class Country
     public string Alpha3Code { get => _alpha3Code; set { _alpha3Code = validateAlpha3Code(value); } }
     private int _numericCode;
     public int NumericCode { get => _numericCode; set { _numericCode = ValidateNumericCode(value); } }
-    public string SubDivisionCode { get; set; }
-    public string InternetDomain { get; set; }
+    public string? SubDivisionCode { get; set; }
+    public string? InternetDomain { get; set; }
 
 
     #region Validations

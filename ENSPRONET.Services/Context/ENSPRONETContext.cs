@@ -18,6 +18,7 @@ public class ENSPRONETContext : DbContext
         DbPath = System.IO.Path.Join(path, "ENSPRONET.db");
 
         seederCountry = new CountryService();
+        Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
