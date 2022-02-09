@@ -12,9 +12,7 @@ public class CountryController : ControllerBase
     private readonly ILogger<CountryController> logger;
     private readonly ICountryReadService countryReadService;
     private readonly ICountryCreateService countryCreateService;
-
     private readonly ICountryUpdateService countryUpdateService;
-
     private readonly ICountryDeleteService countryDeleteService;
 
     public CountryController(ILogger<CountryController> logger, ICountryReadService countryReadService, ICountryCreateService countryCreateService,

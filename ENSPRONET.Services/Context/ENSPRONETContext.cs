@@ -10,6 +10,7 @@ public class ENSPRONETContext : DbContext
     private readonly ISeederService<Country> seederCountry;
     public string DbPath { get; }
     public DbSet<Country> Countries { get; set; }
+    public DbSet<WeatherForecast> WeatherForecast { get; set; }
 
     public ENSPRONETContext()
     {
@@ -18,7 +19,6 @@ public class ENSPRONETContext : DbContext
         DbPath = System.IO.Path.Join(path, "ENSPRONET.db");
 
         seederCountry = new CountryService();
-        Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

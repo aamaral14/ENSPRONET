@@ -26,6 +26,7 @@ public class Country
     public string? SubDivisionCode { get; set; }
     public string? InternetDomain { get; set; }
 
+    public ICollection<WeatherForecast> WeatherForecasts { get; set; }
 
     #region Validations
     private string validateAlpha2Code(string code)
