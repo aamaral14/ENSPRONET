@@ -19,6 +19,7 @@ builder.Services.AddTransient<ISeederService<Country>, CountryService>();
 builder.Services.AddTransient<ICountryDeleteService, CountryService>();
 builder.Services.AddTransient<ICountryUpdateService, CountryService>();
 builder.Services.AddTransient<IWeatherForecastReadService, WeatherForecastService>();
+builder.Services.AddTransient<IWeatherForecastCreateService, WeatherForecastService>();
 
 builder.Services.AddDbContext<ENSPRONETContext>();
 #endregion

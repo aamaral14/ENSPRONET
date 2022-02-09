@@ -4,7 +4,6 @@ using Domains.Domains;
 
 public class WeatherForecastCreateModel
 {
-    public int Id { get; set; }
     public DateTime Date { get; set; }
 
     public int TemperatureC { get; set; }
@@ -20,12 +19,10 @@ public class WeatherForecastCreateModel
     {
         return new WeatherForecast()
         {
-            Id = this.Id,
             Date = this.Date,
             TemperatureC = this.TemperatureC,
             TemperatureF = this.TemperatureF,
-            Summary = this.Summary,
-            Country = new Country() { Id = this.CountryID }
+            Summary = this.Summary
         };
     }
 }

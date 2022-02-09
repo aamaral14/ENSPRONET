@@ -55,6 +55,6 @@ public class WeatherForecastController : ControllerBase
 
         var mappedWeatherForecastDomain = weatherForecastCreateModel.Map();
 
-        return Ok(await weatherForecastCreateService.Create(mappedWeatherForecastDomain));
+        return Ok(await weatherForecastCreateService.Create(mappedWeatherForecastDomain, weatherForecastCreateModel.CountryID));
     }
 }

@@ -11,12 +11,14 @@ public class WeatherForecastService : IWeatherForecastReadService, IWeatherForec
         ENSPRONETContext = ensproNetContext;
     }
 
-    public async Task<int> Create(Domains.Domains.WeatherForecast weatherForecast)
+    public async Task<int> Create(Domains.Domains.WeatherForecast weatherForecast, int countryID)
     {
-        if (weatherForecast == null)
-            throw new ArgumentNullException("weatherForecast");
+        if (weatherForecast == null || countryID == default(int))
+            throw new ArgumentNullException("weatherForecast or contryID");
 
-        await ENSPRONETContext.AddAsync(weatherForecast);
+        var country = await ENSPRONETContext.Countries.Include(m => m.WeatherForecasts).FirstAsync(m => m.Id == countryID);
+
+        country.WeatherForecasts.Add(weatherForecast);
 
         return await ENSPRONETContext.SaveChangesAsync();
     }
