@@ -2,6 +2,7 @@ using ENSPRONET.Domains.Domains;
 using ENSPRONET.Services.Context;
 using ENSPRONET.Services.Services.Common.Interfaces;
 using ENSPRONET.Services.Services.Country;
+using ENSPRONET.Services.Services.WeatherForecast;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddTransient<ICountryCreateService, CountryService>();
 builder.Services.AddTransient<ISeederService<Country>, CountryService>();
 builder.Services.AddTransient<ICountryDeleteService, CountryService>();
 builder.Services.AddTransient<ICountryUpdateService, CountryService>();
+builder.Services.AddTransient<IWeatherForecastReadService, WeatherForecastService>();
+
 builder.Services.AddDbContext<ENSPRONETContext>();
 #endregion
 
