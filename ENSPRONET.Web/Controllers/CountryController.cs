@@ -41,21 +41,13 @@ public class CountryController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<int>> Post(CountryCreateModel countryModel)
+    public async Task<ActionResult<int>> Post(CountryCreateModel countryCreateModel)
     {
         if (!ModelState.IsValid)
             return BadRequest("country");
 
-        Country countryDomainMapped = new Country()
-        {
-            Alpha2Code = countryModel.Alpha2Code,
-            Alpha3Code = countryModel.Alpha3Code,
-            CountryName = countryModel.CountryName,
-            InternetDomain = countryModel.InternetDomain,
-            NumericCode = countryModel.NumericCode,
-            SubDivisionCode = countryModel.SubDivisionCode
-        };
+        Country countryDomain = countryCreateModel.Map();
 
-        return await countryCreateService.Create(countryDomainMapped);
+        return await countryCreateService.Create(countryDomain);
     }
 }
