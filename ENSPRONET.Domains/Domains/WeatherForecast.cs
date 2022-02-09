@@ -10,4 +10,6 @@ public class WeatherForecast
     public int TemperatureF { get; set; }
 
     public string? Summary { get; set; }
+
+    public Country Country { get; set; }
 }
