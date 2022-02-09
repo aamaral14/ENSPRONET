@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ENSPRONET.Services.Services.Country;
 
-public class CountryService : ICountryReadService, ICountryCreateService, ISeederService<Domains.Domains.Country>
+public class CountryService : ICountryReadService, ICountryCreateService, ISeederService<Domains.Domains.Country>, ICountryUpdateService, ICountryDeleteService
 {
     private readonly ENSPRONETContext ENSPRONETContext;
     public CountryService(ENSPRONETContext ensproNetContext)
@@ -72,5 +72,34 @@ public class CountryService : ICountryReadService, ICountryCreateService, ISeede
             .RuleFor(m => m.SubDivisionCode, (f, u) => allCountryInfo.First(m => m.Name == u.CountryName).Fips.ToString());
 
         return fakerCountryDefinition.Generate(numberRecords);
+    }
+
+    public async Task Update(int id, Domains.Domains.Country country)
+    {
+        if (id == default(int) || country == null)
+            throw new ArgumentNullException("country");
+
+        var countrySelected = await ENSPRONETContext.Countries.FirstAsync(m => m.Id == id);
+
+        countrySelected.Alpha2Code = country.Alpha2Code;
+        countrySelected.Alpha3Code = country.Alpha3Code;
+        countrySelected.CountryName = country.CountryName;
+        countrySelected.InternetDomain = country.InternetDomain;
+        countrySelected.NumericCode = country.NumericCode;
+        countrySelected.SubDivisionCode = country.SubDivisionCode;
+
+        ENSPRONETContext.Update(countrySelected);
+
+        await ENSPRONETContext.SaveChangesAsync();
+    }
+
+    public async Task Delete(int id)
+    {
+        if (id == default(int))
+            throw new ArgumentNullException("id");
+
+        ENSPRONETContext.Remove(id);
+
+        await ENSPRONETContext.SaveChangesAsync();
     }
 }
