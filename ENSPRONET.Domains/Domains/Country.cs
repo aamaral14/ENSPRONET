@@ -3,8 +3,9 @@ namespace ENSPRONET.Domains.Domains;
 /// <summary>
 /// Object that represents a country. The country codes are defined bu the standard ISO 3166.
 /// https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+/// </summary>
 /// 
-/// Explanation:
+///  Explanation:
 ///     On c# we have multiple ways to declare the properties.
 ///         1 - By setting the name of the propriety next of the syntax get; set (example property Id);
 ///         2 - By declaring a private property and a public with a simmilar name. 
@@ -12,7 +13,6 @@ namespace ENSPRONET.Domains.Domains;
 ///             By doing this way, we are able attach  behaviours when getting or setting the property, like for example the _alpha3Code
 ///             which is validating the value before setting the value.
 /// 
-/// </summary>
 public class Country
 {
     public int Id { get; set; }

@@ -13,20 +13,14 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
-    private readonly ICountryReadService countryReadService;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, ICountryReadService countryReadService)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
-        this.countryReadService = countryReadService;
     }
 
     [HttpGet]
     public async Task<IEnumerable<WeatherForecast>> Get()
     {
-        var t = await countryReadService.List();
-
-
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateTime.Now.AddDays(index),
