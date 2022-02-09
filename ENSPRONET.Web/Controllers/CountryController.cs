@@ -13,11 +13,18 @@ public class CountryController : ControllerBase
     private readonly ICountryReadService countryReadService;
     private readonly ICountryCreateService countryCreateService;
 
-    public CountryController(ILogger<CountryController> logger, ICountryReadService countryReadService, ICountryCreateService countryCreateService)
+    private readonly ICountryUpdateService countryUpdateService;
+
+    private readonly ICountryDeleteService countryDeleteService;
+
+    public CountryController(ILogger<CountryController> logger, ICountryReadService countryReadService, ICountryCreateService countryCreateService,
+        ICountryUpdateService countryUpdateService, ICountryDeleteService countryDeleteService)
     {
         this.logger = logger;
         this.countryReadService = countryReadService;
         this.countryCreateService = countryCreateService;
+        this.countryUpdateService = countryUpdateService;
+        this.countryDeleteService = countryDeleteService;
     }
 
     [HttpGet]
@@ -43,6 +50,27 @@ public class CountryController : ControllerBase
 
         Country countryDomain = countryCreateModel.Map();
 
-        return await countryCreateService.Create(countryDomain);
+        return Ok(await countryCreateService.Create(countryDomain));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Put(int id, [FromBody] CountryUpdateModel countryUpdateModel)
+    {
+        if (id == default(int) || !ModelState.IsValid)
+            return BadRequest();
+
+        await countryUpdateService.Update(id, countryUpdateModel.Map());
+
+        return Ok();
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (id == default(int))
+            return BadRequest();
+
+        await countryDeleteService.Delete(id);
+
+        return Ok();
     }
 }

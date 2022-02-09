@@ -15,6 +15,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICountryReadService, CountryService>();
 builder.Services.AddTransient<ICountryCreateService, CountryService>();
 builder.Services.AddTransient<ISeederService<Country>, CountryService>();
+builder.Services.AddTransient<ICountryDeleteService, CountryService>();
+builder.Services.AddTransient<ICountryUpdateService, CountryService>();
 builder.Services.AddDbContext<ENSPRONETContext>();
 #endregion
 
