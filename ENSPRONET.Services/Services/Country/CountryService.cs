@@ -98,7 +98,9 @@ public class CountryService : ICountryReadService, ICountryCreateService, ISeede
         if (id == default(int))
             throw new ArgumentNullException("id");
 
-        ENSPRONETContext.Remove(id);
+        var countrySelected = await ENSPRONETContext.Countries.FirstAsync(m => m.Id == id);
+
+        ENSPRONETContext.Remove(countrySelected);
 
         await ENSPRONETContext.SaveChangesAsync();
     }

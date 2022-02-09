@@ -64,6 +64,7 @@ public class CountryController : ControllerBase
         return Ok();
     }
 
+    [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         if (id == default(int))
