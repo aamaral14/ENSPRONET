@@ -57,4 +57,17 @@ public class WeatherForecastController : ControllerBase
 
         return Ok(await weatherForecastCreateService.Create(mappedWeatherForecastDomain, weatherForecastCreateModel.CountryID));
     }
+
+
+    [HttpGet]
+    public IEnumerable<WeatherForeCastReadModel> Get()
+    {
+        return Enumerable.Range(1, 5).Select(index => new WeatherForeCastReadModel
+        {
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        })
+        .ToArray();
+    }
 }
